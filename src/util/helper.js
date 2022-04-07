@@ -1,7 +1,7 @@
 let detail=function todaySession(){
-   const a= new Date('may 6,2022')
-    console.log("date is ",a.getDate())
-    console.log("month is ",a.getMonth())
+   const a= new Date()
+    console.log("Date:",a.getDate())
+    console.log("Month:",a.getMonth()+1)
     batchInfo={
         batch:"uranium",
         week:"W3",
