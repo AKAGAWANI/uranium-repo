@@ -1,70 +1,152 @@
 const express = require('express');
+// const logger = require('./logger')
 
 const router = express.Router();
 
+router.get('/user-profile/:abcd', function(req, res) {
+    console.log(req)
+    console.log(req.params.abcd)
+    res.send('dummy response')
+})
+
 router.get('/test-me', function (req, res) {
-    // let a = { msg: "My first ever API response in JSON !!"} 
+    console.log('------------------')
+    console.log(req)
+    console.log('------------------')
+    console.log('These are the request query parameters: ', req.query)
+    res.send('My first  api!')
+});
+router.get('/movie/:mov', function (req, res) {
+    let movies=['LOR','IPOH','POC','TSK']
+    let movieList=[]
+    if (req.params.mov<=movies.length){
+    for (let i=0;i<movies.length;i++){
+        if (req.params.mov==i+1){
+            movieList.push(movies[i])
+            res.send(movieList)
+        }}}
+        else{
+            res.send("enter valid input") }
+    
+});
+router.get('/movie', function (req, res) {
+    let movies=['LOR','IPOH','POC','TSK']
+    let movieList=[]
+    for (let i=0;i<movies.length;i++){
+            movieList.push(movies[i])
+        
+    }
+    res.send(movieList)
+});
+router.get('/films', function (req, res) {
+    let movies=[{
+        id: 1,
+        name: "The Shining"
+       }, {
+        id: 2,
+        name: "Incendies"
+       }, {
+        id: 3,
+        name: "Rang de Basanti"
+       }, {
+        id: 4,
+        name: "Finding Nemo"
+       }]
+    
+    let filmList=[]
+    for (let i=0;i<movies.length;i++){
+            filmList.push(movies[i])
+        
+    }
+    res.send(filmList)
+});
+router.get('/films/:ID', function (req, res) {
+    let movies=[{
+        id: 1,
+        name: "The Shining"
+       }, {
+        id: 2,
+        name: "Incendies"
+       }, {
+        id: 3,
+        name: "Rang de Basanti"
+       }, {
+        id: 4,
+        name: "Finding Nemo"
+       }]
+    let filmList=[]
+    if (req.params.ID<=movies.length){
+    for (let i=0;i<movies.length;i++){
+        if (req.params.ID==i+1){
+            filmList.push(movies[i])
+            res.send(filmList)
+        }}}
+        else{
+            res.send("enter valid input") }
+    
+});
+    
+    
 
-
-    res.send( { msg: "My first ever API response in JSON !!"} )
+router.get('/missing', function (req, res) {
+    let num=[33,35,37,38,39,40]
+    let misNum=[]
+    for (let i=0;i<num.length-1;i++){
+        if (num[i+1]!==num[i]+1){
+            misNum.push((num[i]+1))
+            }        
+    }
+    console.log(misNum)
+    res.send(misNum)
 });
 
+let playersList=[{
+    name: "manish",
+    dob: "1/1/1995",
+    gender: "male",
+    city: "jalandhar",
+    sports: [
+    "swimming"
+    ]
+    },
+    {
+        name: "lokesh",
+        dob: "1/1/1990",
+        gender: "male",
+        ity: "mumbai",
+        sports: [
+            "soccer"
+        ]
+    },
 
+ {
+    name: "gopal",
+    dob: "1/09/1995",
+    gender: "male",
+    city: "delhi",
+    sports: [
+        "soccer"
+    ]
+}]
 
-router.get('/test-api1', function (req, res) {
+router.post('/player', function (req, res) {
+    let head=[]
+    for (i=0;i<playersList.length;i++){
+        head.push(playersList[i].name)
+    }
+    let newPlayer=req.body
+    for (i=0;i<playersList.length;i++){
+      if( head.includes (newPlayer.name)){ 
+            res.send("exist")
+            break
+        }
 
-    res.send( "hi FunctionUp " )
+    else{playersList.push(req.body)
+        res.send(playersList)}
+        break
+    }
 });
-
-
-router.get('/test-api2', function (req, res) {
-
-    res.send( { msg: "Hi FUnctionUp..again !"} )
-});
-
-
-router.get('/test-api3', function (req, res) {
-
-    res.send( { msg: "Hi FUnctionUp..again..this is another similar api !"} )
-});
-
-
-router.get('/test-api4', function (req, res) {
-
-    res.send( { msg: "Hi FUnctionUp..again..this is another similar api ..not I am getting bored!"} )
-});
-
-
-router.get('/test-api5', function (req, res) {
-
-    res.send( { msg: "Hi FUnctionUp" , name:"FunctionUp", age: "100"} )
-});
-
-
-
-router.get('/test-api6', function (req, res) {
-
-    res.send( {   data: [12, 24, 36, 48, 60]  }   )
-});
-
-router.post('/test-post1', function (req, res) {
-
-    res.send( {  msg: "hi guys"  }   )
-});
-
-
-// to send data in  post request-> prefer sending in BODY -> click body-raw-json
-router.post('/test-post2', function (req, res) {
-    let data= req.body
-    console.log(data)
-    res.send( {  msg: "hi guys..my 2nd post req"  }   )
-});
-
-
-const randomController= require("../controllers/randomController.js")
-//write a post request to accept an element in post request body and add it to the given array and return the new array
-router.post('/test-post3', randomController.addToArray ); //HANDLER/CONTROLLER
-
 
 
 module.exports = router;
+// adding this comment for no reason
