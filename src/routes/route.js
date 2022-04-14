@@ -40,5 +40,7 @@ router.get("/dateManipulations", function (req, res) {
 })
 
 router.post('/create-author', authorController.createAuthor)
+router.post('/create-book', authorController.createBook)
+router.get('/create-book', authorController.geteBook)
 
 module.exports = router;
