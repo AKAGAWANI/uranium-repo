@@ -21,8 +21,8 @@ router.post("/updateBooks", BookController.updateBooks)
 router.post("/deleteBooks", BookController.deleteBooks)
 
 //MOMENT JS
-const moment = require('moment');
-router.get("/dateManipulations", function (req, res) {
+// const moment = require('moment');
+// router.get("/dateManipulations", function (req, res) {
     
     // const today = moment();
     // let x= today.add(10, "days")
@@ -30,17 +30,22 @@ router.get("/dateManipulations", function (req, res) {
     // let validOrNot= moment("29-02-1991", "DD-MM-YYYY").isValid()
     // console.log(validOrNot)
     
-    const dateA = moment('01-01-1900', 'DD-MM-YYYY');
-    const dateB = moment('01-01-2000', 'DD-MM-YYYY');
+//     const dateA = moment('01-01-1900', 'DD-MM-YYYY');
+//     const dateB = moment('01-01-2000', 'DD-MM-YYYY');
 
-    let x= dateB.diff(dateA, "days")
-    console.log(x)
+//     let x= dateB.diff(dateA, "days")
+//     console.log(x)
 
-    res.send({ msg: "all good"})
-})
+//     res.send({ msg: "all good"})
+// })
 
 router.post('/create-author', authorController.createAuthor)
+router.get('/create-author', authorController.gtAuthor)
 router.post('/create-book', authorController.createBook)
 router.get('/create-book', authorController.geteBook)
+router.get('/bhagat', authorController.chetan)
+router.get('/price', authorController.updt)
+router.get('/range', authorController.bookRange)
+
 
 module.exports = router;

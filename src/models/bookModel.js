@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const bSchema = new mongoose.Schema( {
+const bookSchema = new mongoose.Schema( {
     name: String, 
     author_id:Number,
     
@@ -8,7 +8,7 @@ const bSchema = new mongoose.Schema( {
     ratings:Number
 }, { timestamps: true });
 
-module.exports = mongoose.model('BookList', bSchema) //users
+module.exports = mongoose.model('BookList', bookSchema) //users
     
     // " best boook on earth"   [ "Nodejs in detail" , "mongodb in detail", "fronend in detail"] 
     // {
