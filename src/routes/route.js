@@ -8,8 +8,10 @@ router.get("/test-me", function (req, res) {
     res.send("My first ever api!")
 })
 
-router.post("/createdev", aController.createDev  )
-router.post("/createbatch", aController.createBatch  )
+router.post("/createdev", aController.createDev)
+router.post("/createbatch", aController.createBatch)
+router.get("/scholorship", aController.scholorship)
+router.get("/developers", aController.developers)
 
 // router.get("/getAuthorsData", authorController.getAuthorsData)
 
