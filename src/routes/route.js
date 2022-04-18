@@ -20,6 +20,8 @@ router.get("/getAuthorsData", newwController.getAuthorsData)
 router.post("/createpublisher", newwController.createPublisher  )
 router.post("/createeBook", newwController.createeBook  )
 router.get("/createeBook", newwController.geteBook  )
+router.put("/updateBooks", newwController.updateBooks )
+router.put("/price", newwController.incPrice )
 
 
 

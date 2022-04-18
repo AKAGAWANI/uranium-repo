@@ -19,10 +19,10 @@ const createPublisher= async function (req, res) {
 }
 const createeBook= async function (req, res) {
     let book = req.body
-    let authors = await AuthorModel.find().select({_id:1})
-    let publisheR =await publisherModel.find().select({_id:1})
+    let authors = await AuthorModel.find({_id:book.authorId}).select({_id:1})
+    let publisheR =await publisherModel.find({_id:book.publisherId}).select({_id:1})
     if (book.authorId && book.publisherId){
-        if (authors[0]._id==book.authorId && publisheR[0]._id==book.publisherId){
+        if (authors.length && publisheR.length){
     let bookCreated = await bookModel.create(book)
     res.send({data:bookCreated})}
     else{ res.send({msg:"autherId or publisherId does not match"})}
@@ -35,8 +35,32 @@ const geteBook= async function (req, res) {
     res.send({data:list})
 }
 
+const updateBooks = async function (req, res) {
+    let hardCOverPublishers = await publisherModel.find({name : {$in:['Penguine','Harper Collins'] }}).select({_id:1})
+    let arrayOfPublishers = []
+    
+    for (let i = 0; i < hardCOverPublishers.length; i++) {
+        let objId = hardCOverPublishers[i]._id 
+        arrayOfPublishers.push(objId)
+    }
+    
+    let books = await bookModel.updateMany({publisher: {$in: arrayOfPublishers}},{isHardCover: true})
+
+    res.send({data: books})
+}
+const incPrice= async function (req, res) {
+    let list=await AuthorModel.find({rating:{$gt:3.5}})
+    let list1=await bookModel.updateMany({authorId:list},{$inc:{price:10}})
+    res.send({data:list1})
+}
+
+
+
+
 module.exports.createAuthor= createAuthor
 module.exports.getAuthorsData= getAuthorsData
 module.exports.createPublisher= createPublisher
 module.exports.createeBook= createeBook
 module.exports.geteBook= geteBook
+module.exports.updateBooks = updateBooks
+module.exports.incPrice= incPrice
