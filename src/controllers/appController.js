@@ -10,7 +10,7 @@ const proLog=async function(req,res){
     let data=req.body
     searchh=await profileModel.findOne({emailId:data.userId,password:data.password})
     if(!searchh) res.send({msg:"enter valid credentials"})
-    let token=jwt.sign({    
+    let token=jwt.sign({    userId:searchh._id.toString(),
                                 name:"john",
                                 work:"wrestling"
                                 },"uranium")
@@ -30,10 +30,7 @@ let userId = req.params.userId;
 
 
 const proUpdate = async function (req, res) {
-    // token = req.headers["x-auth-token"]
-    // let decodeToken=jwt.verify(token,"uranium")
-    // let userToBeModified = req.params.userId;
-    // if (userToBeModified==decodedToken.userId)
+   
     let userId = req.params.userId;
       let user = await profileModel.findById(userId);
       if (!user) {
