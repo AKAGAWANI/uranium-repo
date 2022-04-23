@@ -9,6 +9,7 @@ router.get("/test-me", function (req, res) {
 })
 
 router.post("/profiledetails", appController.proDetails )
+
 router.post("/prolog", appController.proLog )
 router.get("/profiledetails/:userId", midlw.check,appController.proHome )
 router.put("/profiledetails/:userId", midlw.check,appController.proUpdate )
