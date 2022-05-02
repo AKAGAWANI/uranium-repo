@@ -48,7 +48,7 @@ if (usedEmail){
   return res.status(400).send({status:false ,message: `${data.email} this email is already registered`})
 }
 let savedData = await authorModel.create(data)
-   res.status(201).send({status:true , msg:savedData});
+    return res.status(201).send({status:true , msg:savedData});
 
   }
 catch(error){

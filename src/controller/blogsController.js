@@ -91,7 +91,6 @@ let getSelectiveBlogs = async function (req, res) {
       let blogs = await blogsModel.find({
         $and: [{ isDeleted: false }, { isPublished: true }],
       });
-      // console.log(blogs)
 
       if (!Object.keys(blogs).length) {
         return res
@@ -101,17 +100,13 @@ let getSelectiveBlogs = async function (req, res) {
 
       return res.status(200).send({ status: true, data: blogs });
     } else {
-      let blogs = await blogsModel.find({
-        $and: [{ isDeleted: false }, { isPublished: true }, data],
-      });
-      // console.log(blogs)
-
+  
+      let blogs = await blogsModel.find({ $and: [{ isDeleted: false }, { isPublished: true }, data],});
+      
       if (!Object.keys(blogs).length) {
-        return res
-          .status(404)
-          .send({ status: false, msg: "1.No such blog eists" });
+        return res.status(404).send({ status: false, msg: "No such blog eists" });
       }
-      else if (!document.inludes(data)) { return res.status(404).send({ status: false, msg: "3.No such blog eists" }) }
+     
       return res.status(200).send({ status: true, list: blogs });
     }
   } catch (err) {
@@ -144,20 +139,14 @@ const deletBlog = async function (req, res) {
 const delBlogsByQuery = async function (req, res) {
   try {
     const data = req.query;
+    const userId=req.params.userId
     if (!Object.keys(data).length) {
       return res.status(404).send({ status: false, msg: "Query Params empty" });
     }
 
-    let document = await blogsModel.find({
-      $and: [data, { isDeleted: false }],
-    });
-    console.log(document)
-    if (!document.includes(data)) {
-      return res.status(404).send({ status: false, msg: "Document not match" });
-    }
 
     let deletedBlog = await blogsModel.updateMany(
-      { $and: [data, { isDeleted: false }] },
+      { $and: [data,{authorId:userId}, { isDeleted: false }] },
       { $set: { isDeleted: true, deletedAt: new Date().toLocaleString() } },
       { new: true }
     );
