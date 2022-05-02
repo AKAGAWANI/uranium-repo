@@ -53,6 +53,7 @@ const blogs = async (req, res) => {
 const updateBlog = async (req, res) => {
   try {
     let blogId = req.params.blogId;
+    let userId=req.params.userId
     let data = await blogsModel.find({
       $in: [{ _id: blogId, isDeleted: false }],
     });
@@ -60,6 +61,7 @@ const updateBlog = async (req, res) => {
     if (!Object.keys(data).length) {
       return res.status(400).send({ status: false, msg: "Data is incorrect" });
     }
+if(data.authorId!==userId){return res.status(400).send({ status: false, msg: "this blog deos not belong to this author" });}
     let { title, body, tags, subcategory } = req.body;
     let newBlog = await blogsModel
       .findOneAndUpdate(
@@ -74,9 +76,10 @@ const updateBlog = async (req, res) => {
         { new: true }
       )
       .populate("authorId");
-
+      
     res.status(200).send({ status: true, data: newBlog });
-  } catch (err) {
+}
+   catch (err) {
     console.log(err.message);
     res.status(500).send({ error: err.message });
   }
