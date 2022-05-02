@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const authCheck = async (req, res, next) => {
     try{
-        let newUserId = req.params.userId
+        let newId = req.params.userId
         let token = req.headers['x-auth-token']
         if (!token) token=req.headers['x-Auth-Token']
         if(!token){
@@ -12,8 +12,11 @@ const authCheck = async (req, res, next) => {
         if(!decodedToken){
             return res.status(401).send({status: false, msg: "Authentication Failed"})
         }
-        if(newUserId!==decodedToken.userId){return res.status(403).send({status: false, msg: "Not Authorized"})}
-            
+        
+        if( newId!==decodedToken.userId){
+            return res.status(403).send({status: false, msg: "Not Authorized"})
+        }   
+         
         next()
     }
     catch(err) {
